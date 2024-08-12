@@ -83,10 +83,31 @@ const loginUser = async (req, res) => {
 };
 
 const logOut = (req, res) => {
+  console.log("logout called");
   res.cookie("token", "", {
     expires: new Date(0),
   });
-  res.send();
+  res.status(200).send({ message: "logout" });
 };
 
-module.exports = { registerUser, loginUser, logOut };
+const isUserLoggedIn = (req, res) => {
+  try {
+    console.log(req.cookies["token"]);
+    /* token = req.cookie("token");
+    //const token = authHeader.split(" ")[1];
+    console.log(req.cookies.token);
+    const decodeToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    req.userId = decodeToken.userId;
+    req.role = decodeToken.role;
+    if (req.userId && req.role) {
+      res.status(200).send({
+        userId: req.userId,
+        role: req.role,
+      });
+    } */
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { registerUser, loginUser, logOut, isUserLoggedIn };
